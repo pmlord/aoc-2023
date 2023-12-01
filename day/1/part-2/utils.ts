@@ -12,8 +12,13 @@ const dictionary = {
 };
 
 const speltNumbers: string[] = Object.keys(dictionary);
-
 export const numberRegexp = new RegExp(`[0-9]|${speltNumbers.join("|")}`, "ig");
+
+const reverseSpeltNumbers = speltNumbers.map((str) => reverseString(str));
+export const reverseNumberRegexp = new RegExp(
+  `[0-9]|${reverseSpeltNumbers.join("|")}`,
+  "ig"
+);
 
 export function parseDigitOrSpeltNumber(input: string): number {
   const parsedInt = parseInt(input);
@@ -27,13 +32,15 @@ export function parseDigitOrSpeltNumber(input: string): number {
 }
 
 export function extractCalibrationNumber(input: string): number {
-  const matches = input.match(numberRegexp);
-  if (!matches) throw "no matches";
+  // First number
+  const forwardMathces = input.match(numberRegexp);
+  if (!forwardMathces) throw "no forward matches";
+  const firstDigit = parseDigitOrSpeltNumber(forwardMathces[0]);
 
-  console.log("matches", matches);
-
-  const firstDigit = parseDigitOrSpeltNumber(matches[0]);
-  const secondDigit = parseDigitOrSpeltNumber(matches[matches.length - 1]);
+  // Last number
+  const reverseMatches = reverseString(input).match(reverseNumberRegexp);
+  if (!reverseMatches) throw "no reverse matches";
+  const secondDigit = parseDigitOrSpeltNumber(reverseString(reverseMatches[0]));
 
   if (!Number.isInteger(firstDigit) || !Number.isInteger(secondDigit))
     throw "Input must have 2 digits.";
@@ -46,4 +53,14 @@ export async function textFileToArray(fileName: string): Promise<string[]> {
   // Get the puzzle input
   const text = await Deno.readTextFile(fileName);
   return text.split("\n").filter((str) => str !== "");
+}
+
+export function reverseString(input: string): string {
+  const outputArray = [];
+
+  for (let i = input.length - 1; i >= 0; i--) {
+    outputArray.push(input[i]);
+  }
+
+  return outputArray.join("");
 }

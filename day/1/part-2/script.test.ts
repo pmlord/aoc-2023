@@ -7,6 +7,7 @@ import {
   extractCalibrationNumber,
   numberRegexp,
   parseDigitOrSpeltNumber,
+  reverseString,
   textFileToArray,
 } from "./utils.ts";
 
@@ -35,6 +36,20 @@ Deno.test("extractCalibrationNumber", () => {
 
   // Check that the total sum matches the expected sum.
   assertEquals(sum, finalOutput);
+});
+
+Deno.test("reverseString", () => {
+  assertEquals(reverseString("one"), "eno");
+  assertEquals(reverseString("hello world"), "dlrow olleh");
+  assertEquals(reverseString("eight"), "thgie");
+  assertEquals(reverseString("three"), "eerht");
+});
+
+Deno.test("extractCalibrationNumber can catch overlaps", () => {
+  assertEquals(extractCalibrationNumber("oneight"), 18);
+  assertEquals(extractCalibrationNumber("2zoneight"), 28);
+  assertEquals(extractCalibrationNumber("threeight"), 38);
+  assertEquals(extractCalibrationNumber("fourtythreeight"), 48);
 });
 
 Deno.test("numberRegexp", () => {
