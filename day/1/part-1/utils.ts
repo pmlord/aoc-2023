@@ -1,8 +1,3 @@
-import * as path from "https://deno.land/std@0.208.0/path/mod.ts";
-
-// Utility functions
-// -----------------------------------------------------------------------------
-
 export function extractCalibrationNumber(input: string): number {
   // Extract the first and last numbers from the string.
   let firstDigit: number | undefined = undefined;
@@ -38,19 +33,3 @@ export async function textFileToArray(fileName: string): Promise<string[]> {
   const text = await Deno.readTextFile(fileName);
   return text.split("\n").filter((str) => str !== "");
 }
-
-// Script
-// -----------------------------------------------------------------------------
-
-const __dirname = path.dirname(path.fromFileUrl(import.meta.url));
-
-const array = await textFileToArray(`${__dirname}/input.txt`);
-
-let sum = 0;
-
-for (const str of array) {
-  const number: number = extractCalibrationNumber(str);
-  sum += number;
-}
-
-console.log(`Answer is: ${sum}`);

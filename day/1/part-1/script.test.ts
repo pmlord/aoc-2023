@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
 import * as path from "https://deno.land/std@0.208.0/path/mod.ts";
-import { extractCalibrationNumber, textFileToArray } from "./script.ts";
+import { extractCalibrationNumber, textFileToArray } from "./utils.ts";
 
 const inputs = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
 const outputs = [12, 38, 15, 77];
