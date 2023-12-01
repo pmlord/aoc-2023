@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "d1p1": "deno run --allow-read ./day/1/part-1/script.ts",
+    "d1p2": "deno run --allow-read ./day/1/part-2/script.ts"
+  }
+}
